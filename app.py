@@ -18,7 +18,8 @@ connect_db(app)
 @app.route('/')
 def home_page():
     """Shows home page"""
-    return render_template("home.html")
+    users = User.query.all()
+    return render_template("home.html", users=users)
 
 @app.route('/users')
 def users():
@@ -41,12 +42,13 @@ def post_new_user():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect("/")
-    # return redirect(f"/{new_user.id}")
+    return redirect(f"/users/{new_user.id}")
 
-# @app.route("/users/<int:user_id>")
-# def detailed_user_page():
-#     """Show info about a given user, edit or delete user."""
+@app.route("/users/<int:user_id>")
+def detailed_user_page(user_id):
+    """Show info about a given user, edit or delete user."""
+    user = User.query.get_or_404(user_id)
+    return render_template("user.html", user=user)
 
 # @app.route("/users/<int:user_id>/edit")
 # def edit_page():
