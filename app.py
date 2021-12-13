@@ -48,7 +48,10 @@ def post_new_user():
 def detailed_user_page(user_id):
     """Show info about a given user, edit or delete user."""
     user = User.query.get_or_404(user_id)
-    return render_template("user.html", user=user)
+
+    posts = user.posts
+
+    return render_template("user.html", user=user, posts=posts)
 
 
 @app.route('/users/<int:user_id>/edit')
@@ -57,11 +60,6 @@ def users_edit(user_id):
 
     user = User.query.get_or_404(user_id)
     return render_template('users/edit.html', user=user)
-
-
-# @app.route("/users/<int:[user-id]>/edit", methods=["POST"])
-# def post_edit():
-#     """POSTS our edit, sends to server to update information."""
 
 @app.route('/users/<int:user_id>/edit', methods=["POST"])
 def users_update(user_id):
@@ -76,10 +74,6 @@ def users_update(user_id):
     db.session.commit()
 
     return redirect("/")
-# @app.route("/users/<int:user_id>/delete", methods=["POST"])
-# def post_delete():
-#     """DELETES our user, REDIRECTS to /users"""
-
 
 @app.route('/users/<int:user_id>/delete', methods=["POST"])
 def users_destroy(user_id):
@@ -90,3 +84,4 @@ def users_destroy(user_id):
     db.session.commit()
 
     return redirect("/")
+
