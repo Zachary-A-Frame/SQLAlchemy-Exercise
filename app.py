@@ -50,14 +50,43 @@ def detailed_user_page(user_id):
     user = User.query.get_or_404(user_id)
     return render_template("user.html", user=user)
 
-# @app.route("/users/<int:user_id>/edit")
-# def edit_page():
-#     """Show us the edit page. Has a cancel button to return to the detail page, and a save button."""
+
+@app.route('/users/<int:user_id>/edit')
+def users_edit(user_id):
+    """Show a form to edit an existing user"""
+
+    user = User.query.get_or_404(user_id)
+    return render_template('users/edit.html', user=user)
+
 
 # @app.route("/users/<int:[user-id]>/edit", methods=["POST"])
 # def post_edit():
 #     """POSTS our edit, sends to server to update information."""
 
+@app.route('/users/<int:user_id>/edit', methods=["POST"])
+def users_update(user_id):
+    """Handle form submission for updating an existing user"""
+
+    user = User.query.get_or_404(user_id)
+    user.first_name = request.form['first_name']
+    user.last_name = request.form['last_name']
+    user.profile_url = request.form['profile_url']
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect("/")
 # @app.route("/users/<int:user_id>/delete", methods=["POST"])
 # def post_delete():
 #     """DELETES our user, REDIRECTS to /users"""
+
+
+@app.route('/users/<int:user_id>/delete', methods=["POST"])
+def users_destroy(user_id):
+    """Handle form submission for deleting an existing user"""
+
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect("/")
