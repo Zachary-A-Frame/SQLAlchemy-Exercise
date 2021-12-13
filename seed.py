@@ -24,9 +24,9 @@ db.session.add(teejay)
 db.session.commit()
 
 # 2nd Session add and commit
-first_post = Post(title="Filler title", content="Lots of text weeeee haaaaa")
-second_post = Post(title="Filler title numba 2", content="Lots of text weeeee haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-third_post = Post(title="Filler title numero 3", content="Lots of text weeeee haaaaaAAaaAAaaAaAaAaAAaAaAaAaaaAAaaaaaaA")
+first_post = Post(title="Filler title", content="Lots of text weeeee haaaaa", user_id="1")
+second_post = Post(title="Filler title numba 2", content="Lots of text weeeee haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", user_id="3")
+third_post = Post(title="Filler title numero 3", content="Lots of text weeeee haaaaaAAaaAAaaAaAaAaAAaAaAaAaaaAAaaaaaaA", user_id="3")
 
 db.session.add(first_post)
 db.session.add(second_post)

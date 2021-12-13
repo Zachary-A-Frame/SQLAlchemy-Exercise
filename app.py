@@ -18,13 +18,13 @@ connect_db(app)
 @app.route('/')
 def home_page():
     """Shows home page"""
-    users = User.query.all()
-    return render_template("home.html", users=users)
+    return render_template("root.html")
 
 @app.route('/users')
 def users():
     """Show All Users"""
-    return
+    users = User.query.all()
+    return render_template("home.html", users=users)
 
 @app.route("/users/new")
 def add_new_user():
