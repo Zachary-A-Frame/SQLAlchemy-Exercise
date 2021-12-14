@@ -108,5 +108,3 @@ def new_post(user_id):
     db.session.add(new_post)
     db.session.commit()
     return redirect("/")
-
-
