@@ -85,3 +85,28 @@ def users_destroy(user_id):
 
     return redirect("/")
 
+# ######################################### PART 2 ############################################
+# Some additions were made to the previous routes above, exclusive to part 2 routes will be below.
+
+
+@app.route("/users/<int:user_id>/posts/new")
+def view_new_post_form(user_id):
+    """View new post form"""
+    user = User.query.get_or_404(user_id)
+
+    return render_template("posts/new_post.html", user=user)
+
+@app.route("/users/<int:user_id>/posts/new", methods=["POST"])
+def new_post(user_id):
+    """New post form"""
+    title = request.form["title"]
+    content = request.form["content"]
+    user_id = user_id
+
+    new_post = Post(title=title, content=content, user_id=user_id)
+
+    db.session.add(new_post)
+    db.session.commit()
+    return redirect("/")
+
+
