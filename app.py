@@ -108,3 +108,18 @@ def new_post(user_id):
     db.session.add(new_post)
     db.session.commit()
     return redirect("/")
+
+@app.route("/posts/<int:post_id>")
+def view_post(post_id):
+    """View a user's post based on post id."""
+    post = Post.query.get_or_404(post_id)
+
+    title = post.title
+    content = post.content
+
+    user_id = post.user_id
+    user = User.query.get_or_404(user_id)
+    first_name = user.first_name
+    last_name = user.last_name
+
+    return render_template("posts/post.html", title=title, content=content, first_name=first_name, last_name=last_name)
