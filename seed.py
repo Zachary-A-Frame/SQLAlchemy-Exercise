@@ -1,6 +1,6 @@
 """Seed file to make sample data!!!"""
 
-from models import User, Post, db
+from models import User, Post, Tag, db
 from app import app
 
 #create all tables
@@ -31,5 +31,15 @@ third_post = Post(title="Filler title numero 3", content="Lots of text weeeee ha
 db.session.add(first_post)
 db.session.add(second_post)
 db.session.add(third_post)
+
+db.session.commit()
+
+# 3rd Session add tags data
+
+first_tag = Tag(name="Fun")
+second_tag = Tag(name="Jazz")
+
+db.session.add(first_tag)
+db.session.add(second_tag)
 
 db.session.commit()

@@ -33,7 +33,6 @@ class User(db.Model):
                           default="https://i.imgur.com/ST5Q7hj.png")
     posts = db.relationship('Post', backref="user", cascade="all, delete-orphan")
 
-
     @property
     def full_name(self):
         """Return full name of user."""
@@ -60,10 +59,43 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime,
                            nullable=False,
                            default=datetime.datetime.now)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.id'),
+                        nullable=False)
 
     @property
     def friendly_date(self):
         """Return nicely-formatted date."""
 
         return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
+
+class PostTag(db.Model):
+    __tablename__ = "post_tags"
+
+    def __repr__(self):
+        s = self
+        return f"<Post tag {s.post_id} {s.tag_id}>"
+
+    post_id = db.Column(db.Integer,
+                        db.ForeignKey("posts.id"),
+                        primary_key=True)
+
+    tag_id = db.Column(db.Integer,
+                       db.ForeignKey("tags.id"),
+                       primary_key=True)
+
+class Tag(db.Model):
+    __tablename__ = "tags"
+
+    def __repr__(self):
+        s = self
+        return f"<Tag {s.id} {s.name}>"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+    name = db.Column(db.Text,
+                    nullable=False,
+                    unique=True)
+    posts = db.relationship('Post', secondary="post_tags", backref='tags')
+
