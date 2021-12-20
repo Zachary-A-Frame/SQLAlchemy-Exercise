@@ -1,9 +1,9 @@
 """Seed file to make sample data!!!"""
 
-from models import User, Post, Tag, db
+from models import User, Post, Tag, PostTag, db
 from app import app
 
-#create all tables
+# create all tables
 db.drop_all()
 db.create_all()
 
@@ -24,9 +24,12 @@ db.session.add(teejay)
 db.session.commit()
 
 # 2nd Session add and commit
-first_post = Post(title="Filler title", content="Lots of text weeeee haaaaa", user_id="1")
-second_post = Post(title="Filler title numba 2", content="Lots of text weeeee haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", user_id="3")
-third_post = Post(title="Filler title numero 3", content="Lots of text weeeee haaaaaAAaaAAaaAaAaAaAAaAaAaAaaaAAaaaaaaA", user_id="3")
+first_post = Post(title="Filler title",
+                  content="Lots of text weeeee haaaaa", user_id="1")
+second_post = Post(title="Filler title numba 2",
+                   content="Lots of text weeeee haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", user_id="3")
+third_post = Post(title="Filler title numero 3",
+                  content="Lots of text weeeee haaaaaAAaaAAaaAaAaAaAAaAaAaAaaaAAaaaaaaA", user_id="3")
 
 db.session.add(first_post)
 db.session.add(second_post)
@@ -38,8 +41,14 @@ db.session.commit()
 
 first_tag = Tag(name="Fun")
 second_tag = Tag(name="Jazz")
+third_tag = Tag(name="fantasy")
 
 db.session.add(first_tag)
 db.session.add(second_tag)
+db.session.add(third_tag)
 
 db.session.commit()
+
+# 4th Session add post tags
+
+post_tags = PostTag(post_id="1", tag_id="1")
